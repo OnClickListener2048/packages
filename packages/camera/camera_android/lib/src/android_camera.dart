@@ -216,7 +216,10 @@ class AndroidCamera extends CameraPlatform {
 
   @override
   Future<XFile> stopVideoRecording(int cameraId) async {
-    final String path = await _hostApi.stopVideoRecording();
+    final String? path = await _hostApi.stopVideoRecording();
+    if (path == null) {
+      throw CameraException('Video recording error', 'No video path provided');
+    }
     return XFile(path);
   }
 

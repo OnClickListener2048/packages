@@ -859,11 +859,14 @@ class Camera
       // Ignore exceptions and try to continue (changes are camera session already aborted capture).
     }
 
+    boolean haveCaptureError = false;
+
     try {
       mediaRecorder.stop();
+    } catch (IllegalStateException e) {
+      // Ignore exceptions and try to continue (changes are camera session already aborted capture).
     } catch (RuntimeException e) {
-      // Ignore exceptions and try to continue (a RuntimeException is intentionally thrown to the application
-      // , if no valid audio/ video data has been received when stop() is called).
+      haveCaptureError = true;
     }
 
     mediaRecorder.reset();
@@ -874,6 +877,9 @@ class Camera
     }
     String path = captureFile.getAbsolutePath();
     captureFile = null;
+    if (haveCaptureError) {
+      return null;
+    }
     return path;
   }
 

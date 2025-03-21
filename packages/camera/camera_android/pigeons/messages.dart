@@ -154,7 +154,7 @@ abstract class CameraApi {
 
   /// Ends video recording on the camera with the given ID and returns the path
   /// to the resulting file.
-  String stopVideoRecording();
+  String? stopVideoRecording();
 
   /// Pauses video recording on the camera with the given ID.
   void pauseVideoRecording();
